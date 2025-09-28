@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Solar Park Topo Map</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    #map { height: 600px; width: 100%; }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    // Initialize map centered on solar park
+    var map = L.map('map').setView([28.13, 73.11], 14); // example coordinates
+
+    // Topographic tiles
+    L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+      maxZoom: 17,
+      attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/">OSM</a> | <a href="https://opentopomap.org">OpenTopoMap</a>'
+    }).addTo(map);
+
+    // Example solar park polygon
+    var solarParkCoords = [
+      [28.131, 73.110],
+      [28.131, 73.114],
+      [28.128, 73.114],
+      [28.128, 73.110]
+    ];
+    L.polygon(solarParkCoords, {
+      color: 'orange',
+      fillColor: 'yellow',
+      fillOpacity: 0.4
+    }).addTo(map).bindPopup('Solar Park Area');
+
+    // Example trackers as markers
+    var trackers = [
+      [28.129, 73.111],
+      [28.130, 73.112],
+      [28.1295, 73.113]
+    ];
+
+    trackers.forEach(function(coord, index) {
+      L.marker(coord).addTo(map)
+       .bindPopup('Tracker ' + (index+1));
+    });
+  </script>
+</body>
+</html>
